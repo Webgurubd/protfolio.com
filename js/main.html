@@ -1,0 +1,67 @@
+/*-----------page navigition and styling----------*/
+function pageShow(page){
+	var pageLink = document.getElementsByClassName("page_link");
+	var presenrPageNo = 0;
+	document.getElementById("home_content").style.display = "none";
+	document.getElementById("men_content").style.display = "none";
+	document.getElementById("women_content").style.display = "none";
+	document.getElementById("kids_content").style.display = "none";
+	document.getElementById("contacts_content").style.display = "none";
+	for(i=0; i<pageLink.length; i++){
+		pageLink[i].style.color = "#333";
+		pageLink[i].style.backgroundColor = "rgba(255,255,255,0)";
+		pageLink[i].style.textShadow = "none";
+	}
+	if(page == "men"){
+		document.getElementById("men_content").style.display = "block";
+		presenrPageNo = 1;
+	}else if(page == "women"){
+		document.getElementById("women_content").style.display = "block";
+		presenrPageNo = 2;
+	}else if(page == "kids"){
+		document.getElementById("kids_content").style.display = "block";
+		presenrPageNo = 3;
+	}else if(page == "contacts"){
+		document.getElementById("contacts_content").style.display = "block";
+		presenrPageNo = 4;
+	}else{
+		document.getElementById("home_content").style.display = "block";
+		presenrPageNo = 0;
+	}
+	pageLink[presenrPageNo].style.color = "#fff";
+	pageLink[presenrPageNo].style.backgroundColor = "rgba(255,255,255,0.5)";
+	pageLink[presenrPageNo].style.textShadow = "0px 0px 3px #000000";
+}
+
+
+/*------------JavaScript for main Slide Show-------------*/
+	var slides = document.getElementsByClassName("slide");
+	var slideLefts = [0, 100, 200, -100];
+	var slideIntervel = setInterval(slideAnimation, 4000);
+	
+	function slideAnimation(){
+		for(i = 0; i < slides.length; i++){
+			if(slideLefts[i] == 200){slides[i].style.display = "block";}
+			slideLefts[i] -= 100;
+			if(slideLefts[i] == -200){
+				slideLefts[i] = 200;
+				slides[i].style.display = "none";
+			}
+			slides[i].style.left = slideLefts[i] + "%";	
+		}
+	}
+	
+	
+/*-------------show Product by SubCategory------------*/
+function ProductBySubCategory(indx){
+	document.getElementById("man_subCategory").innerHTML = "&nbsp;&gt;&nbsp;" + items["subCategory"]["men"][indx]; 
+	document.getElementById("men_products_showcas").innerHTML = "";
+	for(i=0; i < products["men"].length; i++){
+		if(products["men"][i]["subCategory"] == items["subCategory"]["men"][indx]){
+			productCardMaker(products["men"][i]["url"], products["men"][i]["brandsName"], products["men"][i]["productName"], products["men"][i]["price"], products["men"][i]["off"]);
+			document.getElementById("men_products_showcas").innerHTML += productCard;
+		}else if(document.getElementById("men_products_showcas").innerHTML == ""){
+			document.getElementById("men_products_showcas").innerHTML = "&nbsp;&nbsp;&nbsp;Sorry! Product Not Found...";
+		}
+	}
+}
